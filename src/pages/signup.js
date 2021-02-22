@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { doesUsernameExist } from "services/firebase";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "../context/firebase";
 import logo from "../images/logo.png";
@@ -19,29 +20,36 @@ export default function SignUp() {
     emailAddress === "";
   const handleSignUp = async (event) => {
     event.preventDefault();
+    const usernameExists = await doesUsernameExist(username);
+    if (!usernameExists.length) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
 
-    try {
-      const createdUserResult = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(emailAddress, password);
+        await createdUserResult.user.updateProfile({
+          displayName: username,
+        });
 
-      await createdUserResult.user.updateProfile({
-        displayName: username,
-      });
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          followers: [],
+          dateCreated: Date.now(),
+        });
+      } catch (error) {
+        setFullName("");
 
-      await firebase.firestore().collection("users").add({
-        userId: createdUserResult.user.uid,
-        username: username.toLowerCase(),
-        fullName,
-        emailAddress: emailAddress.toLowerCase(),
-        following: [],
-        dateCreated: Date.now(),
-      });
-    } catch (error) {
-      setFullName("");
+        setError(error.message);
+      }
+    } else {
       setEmailAddress("");
       setPassword("");
-      setError(error.message);
+      setUsername("");
+      setError("Username is already taken, please try another");
     }
   };
   useEffect(() => {
@@ -54,6 +62,9 @@ export default function SignUp() {
           <h1 className="flex justify-center w-full">
             <img src={logo} alt="Quickstagram" className="mt-2 w-6/12 mb-4" />
           </h1>
+          {error && (
+            <p className="mb-4 text-xs text-red-500 text-center">{error}</p>
+          )}
 
           <form onSubmit={handleSignUp} method="POST">
             <input
@@ -91,8 +102,11 @@ export default function SignUp() {
               onChange={({ target }) => setPassword(target.value)}
             />
             <button
+              disabled={isInvalid}
               type="submit"
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold`}
+              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
+                isInvalid && "cursor-not-allowed opacity-50"
+              }`}
             >
               Sign Up
             </button>
