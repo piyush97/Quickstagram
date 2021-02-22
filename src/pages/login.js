@@ -1,14 +1,28 @@
-import React, { useEffect, useState } from "react";
+import FirebaseContext from "context/firebase";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import phoneImg from "../images/iphone-with-profile.jpg";
 import logo from "../images/logo.png";
 
 const Login = () => {
+  const { firebase } = useContext(FirebaseContext);
+
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const isInvalid = password === "" || emailAddress === "";
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+    } catch (error) {
+      setEmailAddress("");
+      setPassword("");
+      setError(error.message);
+    }
+  };
 
   useEffect(() => {
     document.title = "Login - Quickstagram";
@@ -24,15 +38,16 @@ const Login = () => {
           <h1 className="flex justify-center w-full">
             <img src={logo} alt="Quickstagram" className="mt-2 w-6/12 mb-4" />
           </h1>
+          {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
 
-          <form method="POST">
+          <form onSubmit={handleLogin} method="POST">
             <input
               aria-label="Enter your email address"
               className="text-sm w-full mr-3 py-5 px-4 h-2 border rounded mb-2"
               type="text"
               placeholder="Email address"
               value={emailAddress}
-              onChange={(target) => setEmailAddress(target.value)}
+              onChange={({ target }) => setEmailAddress(target.value)}
               required
             />
             <input
@@ -41,7 +56,7 @@ const Login = () => {
               type="password"
               placeholder="Password"
               value={password}
-              onChange={(target) => setPassword(target.value)}
+              onChange={({ target }) => setPassword(target.value)}
               required
             />
             <button
