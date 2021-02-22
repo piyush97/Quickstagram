@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import phoneImg from "../images/iphone-with-profile.jpg";
 import logo from "../images/logo.png";
 
 const Login = () => {
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const isInvalid = password === "" || emailAddress === "";
+
   useEffect(() => {
     document.title = "Login - Quickstagram";
   }, []);
@@ -26,6 +31,8 @@ const Login = () => {
               className="text-sm w-full mr-3 py-5 px-4 h-2 border rounded mb-2"
               type="text"
               placeholder="Email address"
+              value={emailAddress}
+              onChange={(target) => setEmailAddress(target.value)}
               required
             />
             <input
@@ -33,11 +40,16 @@ const Login = () => {
               className="text-sm w-full mr-3 py-5 px-4 h-2 border rounded mb-2"
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(target) => setPassword(target.value)}
               required
             />
             <button
+              disabled={isInvalid}
               type="submit"
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold`}
+              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
+                isInvalid && "opacity-50 cursor-not-allowed"
+              } `}
             >
               Log In
             </button>
