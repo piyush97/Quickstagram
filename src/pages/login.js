@@ -1,11 +1,12 @@
 import FirebaseContext from "context/firebase";
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import phoneImg from "../images/iphone-with-profile.jpg";
 import logo from "../images/logo.png";
 
 const Login = () => {
+  const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -17,6 +18,7 @@ const Login = () => {
     event.preventDefault();
     try {
       await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+      history.push(ROUTES.DASHBOARD);
     } catch (error) {
       setEmailAddress("");
       setPassword("");
