@@ -16,13 +16,14 @@ export default function Header() {
             <h1>
               <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
                 <img
-                  src="../images/logo.png"
+                  src="/images/logo.png"
                   alt="Quickstagram"
-                  className="mt-2 w-6/12"
+                  className="mt-2 w-4/12"
                 />
               </Link>
             </h1>
           </div>
+
           <div className="text-gray text-center flex items-center align-items">
             {user ? (
               <>
@@ -68,11 +69,12 @@ export default function Header() {
                     />
                   </svg>
                 </button>
+
                 <div className="flex items-center cursor-pointer">
                   <Link to={`/p/${user.displayName}`}>
                     <img
                       className="rounded-full h-8 w-8 flex"
-                      src={`../images/avatars/${user.displayName}.jpg`}
+                      src={`/images/avatars/${user.displayName}.jpg`}
                       alt={`${user.displayName} profile pic`}
                     />
                   </Link>
