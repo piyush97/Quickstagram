@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "../context/firebase";
-import logo from "../images/logo.png";
+import UserContext from "../context/user";
+
 export default function Header() {
   const { firebase } = useContext(FirebaseContext);
-  const user = {
-    displayName: "piyush",
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <header className="h-16 bg-white border-b mb-8">
@@ -16,7 +15,11 @@ export default function Header() {
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
             <h1>
               <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
-                <img src={logo} alt="Quickstagram" className="mt-2 w-4/12" />
+                <img
+                  src="/images/logo.png"
+                  alt="Quickstagram"
+                  className="mt-2 w-6/12"
+                />
               </Link>
             </h1>
           </div>
@@ -69,8 +72,8 @@ export default function Header() {
                   <Link to={`/p/${user.displayName}`}>
                     <img
                       className="rounded-full h-8 w-8 flex"
-                      src={`../images/avatars/${user.displayName}.jpg`}
-                      alt={`${user.displayName} profile picture`}
+                      src={`/images/avatars/${user.displayName}.jpg`}
+                      alt={`${user.displayName} profile pic`}
                     />
                   </Link>
                 </div>

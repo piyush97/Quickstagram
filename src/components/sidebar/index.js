@@ -1,7 +1,14 @@
 import React from "react";
+import useUser from "../../hooks/useUser";
 
-const Sidebar = () => {
-  return <div>SideBar</div>;
-};
+export default function Sidebar() {
+  const {
+    user: { fullName, username, userId },
+  } = useUser();
 
-export default Sidebar;
+  return (
+    <div className="p-4">
+      <p>{userId}</p>
+    </div>
+  );
+}
