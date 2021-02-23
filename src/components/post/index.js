@@ -1,9 +1,12 @@
 import React from "react";
+import Footer from "./footer";
+import Image from "./image";
 
 const Post = ({ content }) => {
   return (
     <div className="rounded col-span-4 border bg-white mb-16">
-      <pre>{JSON.stringify(content, null, 4)}</pre>
+      <Image src={content.imageSrc} caption={content.caption} />
+      <Footer username={content.username} caption={content.caption} />
     </div>
   );
 };
