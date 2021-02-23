@@ -1,5 +1,6 @@
 import React from "react";
 import useUser from "../../hooks/useUser";
+import User from "./user";
 
 export default function Sidebar() {
   const {
@@ -8,7 +9,7 @@ export default function Sidebar() {
 
   return (
     <div className="p-4">
-      <p>{userId}</p>
+      <User username={username} fullName={fullName} />
     </div>
   );
 }
