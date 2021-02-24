@@ -53,8 +53,8 @@ export default function Header({
       <div className="container flex justify-center">
         <img
           className="rounded-full h-40 w-40 flex"
-          alt={`${profileUsername} profile picture`}
-          src={`/images/avatars/${profileUsername}.jpg`}
+          alt={`${profileUsername} profile pic`}
+          src={`https://ui-avatars.com/api/?name=${profileUsername}`}
         />
       </div>
       <div className="flex items-center justify-center flex-col col-span-2">

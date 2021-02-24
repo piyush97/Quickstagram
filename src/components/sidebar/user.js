@@ -13,7 +13,7 @@ const User = ({ username, fullName }) =>
       <div className="flex items-center justify-between col-span-1">
         <img
           className="rounded-full w-16 flex mr-3"
-          src={`/images/avatars/${username}.jpg`}
+          src={`https://ui-avatars.com/api/?name=${username}`}
           alt="My profile"
         />
       </div>
