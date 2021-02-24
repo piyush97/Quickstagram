@@ -11,7 +11,7 @@ export default function Photos({ photos }) {
               <Skeleton key={index} count={1} width={320} height={400} />
             ))}
           </>
-        ) : photos ? (
+        ) : photos && photos.length > 0 ? (
           photos &&
           photos.map((photo) => (
             <div key={photo.docId} className="relative group">
@@ -22,7 +22,9 @@ export default function Photos({ photos }) {
       </div>
 
       {!photos ||
-        (photos && <p className="text-center text-2xl">No Photos Yet</p>)}
+        (photos && photos.length === 0 && (
+          <p className="text-center text-2xl">No Photos Yet</p>
+        ))}
     </div>
   );
 }
