@@ -140,3 +140,18 @@ export async function getUserPhotosByUsername(username) {
 
   return photos;
 }
+
+export async function toggleFollow(
+  isFollowingProfile,
+  activeUserDocId,
+  profileDocId,
+  profileId,
+  followingUserId
+) {
+  await updateUserFollowing(activeUserDocId, profileId, isFollowingProfile);
+  await updateFollowedUserFollowers(
+    profileDocId,
+    followingUserId,
+    isFollowingProfile
+  );
+}
