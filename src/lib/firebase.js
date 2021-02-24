@@ -1,11 +1,11 @@
 const config = {
-  apiKey: "AIzaSyC04XJFplOdod94ZZ0CnFvge4EEk-3lz7k",
-  authDomain: "quickstagram.firebaseapp.com",
-  projectId: "quickstagram",
-  storageBucket: "quickstagram.appspot.com",
-  messagingSenderId: "207354754152",
-  appId: "1:207354754152:web:62a432c784bf11253977dd",
-  measurementId: "G-SNKSYEFLMT",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESS_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MES_ID,
 };
 
 const firebase = window.firebase.initializeApp(config);
