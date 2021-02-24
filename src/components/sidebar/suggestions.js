@@ -26,9 +26,9 @@ const Suggestions = ({ userId }) => {
       const response = await getSuggestedProfiles(userId);
       setProfiles(response);
     }
-    // if (userId) {
-    //     suggestedProfiles();
-    // }
+    if (userId) {
+      suggestedProfiles();
+    }
   }, [userId]);
 
   return !profiles ? (
